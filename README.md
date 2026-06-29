@@ -1,1 +1,1 @@
-# Social-media-platform-1
+# codealpha_tasks
