@@ -1,0 +1,19 @@
+{
+  "users": [
+    {
+      "id": "b80dabac-6c4f-47f2-9c2b-4f91fe8d3a08",
+      "username": "aarush saini",
+      "displayName": "aarush",
+      "email": "aarushsainik@5155",
+      "passwordHash": "786f163578552fe093f64048d4a52710eeda088dcaed4413e51b8a112c8ff789b3aec78ec4b950e1f352f43d4e0bd9d89f2a983602d8dbd89d215c4cb249ae40",
+      "salt": "c0b182b26542ce323617be391170d9f5",
+      "bio": "Hello, I am new here!",
+      "avatar": "https://api.dicebear.com/7.x/adventurer/svg?seed=aarush%20saini",
+      "banner": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1000&auto=format&fit=crop&q=60",
+      "createdAt": "2026-06-25T17:15:38.444Z"
+    }
+  ],
+  "posts": [],
+  "comments": [],
+  "follows": []
+}

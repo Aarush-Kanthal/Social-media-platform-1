@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VibeNet | Share Your World</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap"
+    rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body class="dark-theme">
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- ==================== AUTH CONTAINER ==================== -->
+  <div id="auth-container" class="auth-container">
+    <div class="auth-card-wrapper">
+      <div class="auth-brand">
+        <div class="logo-icon"><i class="fa-solid fa-wind"></i></div>
+        <h1>VibeNet</h1>
+        <p>Connect. Share. Vibe.</p>
+      </div>
+
+      <!-- Login Card -->
+      <div id="login-card" class="auth-card active">
+        <h2>Welcome Back</h2>
+        <p class="auth-subtitle">Log in to check your feed</p>
+        <form id="login-form">
+          <div class="input-group">
+            <i class="fa-regular fa-user"></i>
+            <input type="text" id="login-username" placeholder="Username" required autocomplete="username">
+          </div>
+          <div class="input-group">
+            <i class="fa-regular fa-key"></i>
+            <input type="password" id="login-password" placeholder="Password" required autocomplete="current-password">
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Log In <i
+              class="fa-solid fa-arrow-right-to-bracket"></i></button>
+        </form>
+        <p class="auth-switch">Don't have an account? <a href="#" id="go-to-register">Register here</a></p>
+      </div>
+
+      <!-- Register Card -->
+      <div id="register-card" class="auth-card">
+        <h2>Join VibeNet</h2>
+        <p class="auth-subtitle">Create an account to start sharing</p>
+        <form id="register-form">
+          <div class="input-group">
+            <i class="fa-regular fa-user"></i>
+            <input type="text" id="register-username" placeholder="Username" required autocomplete="username">
+          </div>
+          <div class="input-group">
+            <i class="fa-regular fa-envelope"></i>
+            <input type="email" id="register-email" placeholder="Email Address" required autocomplete="email">
+          </div>
+          <div class="input-group">
+            <i class="fa-regular fa-id-card"></i>
+            <input type="text" id="register-displayname" placeholder="Display Name (Optional)" autocomplete="name">
+          </div>
+          <div class="input-group">
+            <i class="fa-regular fa-key"></i>
+            <input type="password" id="register-password" placeholder="Password (Min. 6 chars)" required
+              autocomplete="new-password">
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Sign Up <i class="fa-solid fa-user-plus"></i></button>
+        </form>
+        <p class="auth-switch">Already have an account? <a href="#" id="go-to-login">Log in here</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MAIN APP CONTAINER ==================== -->
+  <div id="app-container" class="app-container hidden">
+    <!-- Outer Shell wrapper -->
+    <div class="app-layout">
+
+      <!-- LEFT SIDEBAR -->
+      <aside class="sidebar-left">
+        <div class="sidebar-header">
+          <div class="brand">
+            <i class="fa-solid fa-wind brand-logo"></i>
+            <span class="brand-text">VibeNet</span>
+          </div>
+        </div>
+
+        <nav class="sidebar-nav">
+          <a href="#" class="nav-item active" data-view="feed">
+            <i class="fa-solid fa-house"></i>
+            <span class="nav-label">Home</span>
+          </a>
+          <a href="#" class="nav-item" data-view="explore">
+            <i class="fa-solid fa-compass"></i>
+            <span class="nav-label">Explore</span>
+          </a>
+          <a href="#" class="nav-item" id="nav-my-profile-btn" data-view="profile">
+            <i class="fa-solid fa-user"></i>
+            <span class="nav-label">Profile</span>
+          </a>
+          <button class="btn btn-primary btn-compose" id="open-compose-btn">
+            <i class="fa-solid fa-pen-nib"></i>
+            <span class="compose-label">Post Something</span>
+          </button>
+        </nav>
+
+        <!-- Current User Profile Footer -->
+        <div class="user-profile-footer" id="current-user-badge">
+          <img src="" alt="Avatar" class="avatar avatar-sm user-avatar">
+          <div class="user-info">
+            <div class="display-name user-display-name">Loading...</div>
+            <div class="username user-handle">@username</div>
+          </div>
+          <button class="btn-logout" id="logout-btn" title="Log Out">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </button>
+        </div>
+      </aside>
+
+      <!-- MIDDLE CONTENT COLUMN -->
+      <main class="content-middle">
+        <!-- Top Sticky Header -->
+        <header class="content-header">
+          <h2 id="view-title">Home Feed</h2>
+        </header>
+
+        <div class="view-viewport">
+          <!-- 1. FEED VIEW -->
+          <div id="view-feed" class="app-view active">
+            <!-- Create Post Card -->
+            <div class="create-post-card">
+              <div class="create-post-header">
+                <img src="" alt="My Avatar" class="avatar avatar-sm user-avatar">
+                <textarea id="post-textarea" placeholder="What's on your mind? Share some vibes..." rows="3"></textarea>
+              </div>
+
+              <!-- Optional Image Input Section (Expandable) -->
+              <div class="post-options-expand" id="post-image-input-wrapper">
+                <div class="input-group input-group-sm">
+                  <i class="fa-regular fa-image"></i>
+                  <input type="text" id="post-image-url" placeholder="Paste an image URL (optional)">
+                </div>
+              </div>
+
+              <div class="create-post-actions">
+                <button type="button" class="btn-icon" id="toggle-image-input" title="Add Image">
+                  <i class="fa-regular fa-image"></i>
+                </button>
+                <button type="button" class="btn btn-primary btn-sm" id="submit-post-btn">
+                  Publish Post <i class="fa-solid fa-paper-plane"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Feed Posts List -->
+            <div id="feed-posts" class="posts-list">
+              <!-- Dynamically populated -->
+              <div class="loading-state">
+                <i class="fa-solid fa-circle-notch fa-spin"></i>
+                <p>Catching latest vibes...</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. EXPLORE VIEW -->
+          <div id="view-explore" class="app-view">
+            <!-- Search bar -->
+            <div class="explore-search-bar">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" id="explore-search-input" placeholder="Search users by username...">
+            </div>
+
+            <!-- Search Results or Global Posts -->
+            <div class="explore-results-section">
+              <h3 id="explore-heading">Global Feed</h3>
+              <div id="explore-posts" class="posts-list">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. PROFILE VIEW -->
+          <div id="view-profile" class="app-view">
+            <!-- Profile Info Banner and Stats -->
+            <div class="profile-header-container">
+              <div class="profile-banner-wrapper">
+                <img src="" alt="Banner" id="profile-banner-img" class="profile-banner">
+              </div>
+              <div class="profile-details-wrapper">
+                <div class="profile-avatar-row">
+                  <img src="" alt="Avatar" id="profile-avatar-img" class="avatar avatar-lg">
+                  <div class="profile-actions-cell">
+                    <button class="btn btn-secondary" id="edit-profile-btn">Edit Profile</button>
+                    <button class="btn btn-primary hidden" id="follow-profile-btn">Follow</button>
+                  </div>
+                </div>
+
+                <h2 id="profile-display-name">Display Name</h2>
+                <div class="profile-handle" id="profile-username">@username</div>
+
+                <p class="profile-bio" id="profile-bio-text">User biography matches go here...</p>
+
+                <div class="profile-stats">
+                  <div class="stat-item">
+                    <span class="stat-num" id="profile-posts-count">0</span>
+                    <span class="stat-label">Posts</span>
+                  </div>
+                  <div class="stat-item">
+                    <span class="stat-num" id="profile-followers-count">0</span>
+                    <span class="stat-label">Followers</span>
+                  </div>
+                  <div class="stat-item">
+                    <span class="stat-num" id="profile-following-count">0</span>
+                    <span class="stat-label">Following</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Profile Nav Tabs -->
+            <div class="profile-tabs">
+              <button class="tab-item active" data-profile-tab="posts">My Posts</button>
+              <button class="tab-item" data-profile-tab="likes">Liked Posts</button>
+            </div>
+
+            <!-- Profile Posts Lists -->
+            <div id="profile-posts-list" class="posts-list">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- RIGHT SIDEBAR -->
+      <aside class="sidebar-right">
+        <!-- Who to Follow Panel -->
+        <div class="panel">
+          <h3>Who to Follow</h3>
+          <div class="suggestions-list" id="suggestions-container">
+            <!-- Dynamically populated -->
+            <div class="loading-state">
+              <i class="fa-solid fa-circle-notch fa-spin"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trending Topics Card -->
+        <div class="panel">
+          <h3>Trending Vibes</h3>
+          <div class="trends-list">
+            <div class="trend-item">
+              <span class="trend-category">Technology · Trending</span>
+              <span class="trend-name">#WebDevelopment</span>
+              <span class="trend-posts">12.4K posts</span>
+            </div>
+            <div class="trend-item">
+              <span class="trend-category">Aesthetics · Trending</span>
+              <span class="trend-name">#Glassmorphism</span>
+              <span class="trend-posts">8.2K posts</span>
+            </div>
+            <div class="trend-item">
+              <span class="trend-category">Lifestyle · Trending</span>
+              <span class="trend-name">#VibeNet</span>
+              <span class="trend-posts">5.6K posts</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- ==================== COMPOSE POST MODAL ==================== -->
+  <div id="compose-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Create New Post</h3>
+        <button class="modal-close" id="close-compose-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <textarea id="modal-post-textarea" placeholder="What is happening? Share some vibes..." rows="4"></textarea>
+        <div class="input-group">
+          <i class="fa-regular fa-image"></i>
+          <input type="text" id="modal-post-image-url" placeholder="Optional Image URL">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancel-compose-btn">Cancel</button>
+        <button class="btn btn-primary" id="modal-submit-post-btn">Publish <i
+            class="fa-solid fa-paper-plane"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== EDIT PROFILE MODAL ==================== -->
+  <div id="edit-profile-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Edit Profile</h3>
+        <button class="modal-close" id="close-edit-modal">&times;</button>
+      </div>
+      <form id="edit-profile-form">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="edit-display-name">Display Name</label>
+            <div class="input-group">
+              <i class="fa-regular fa-id-card"></i>
+              <input type="text" id="edit-display-name" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="edit-bio">Biography</label>
+            <textarea id="edit-bio" rows="3" placeholder="Tell everyone about yourself..."></textarea>
+          </div>
+          <div class="form-group">
+            <label for="edit-avatar">Avatar Image URL</label>
+            <div class="input-group">
+              <i class="fa-regular fa-user"></i>
+              <input type="text" id="edit-avatar" placeholder="https://example.com/avatar.jpg">
+            </div>
+            <span class="input-hint">Using DiceBear or custom image links.</span>
+          </div>
+          <div class="form-group">
+            <label for="edit-banner">Profile Banner URL</label>
+            <div class="input-group">
+              <i class="fa-regular fa-image"></i>
+              <input type="text" id="edit-banner" placeholder="https://example.com/banner.jpg">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="cancel-edit-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes <i class="fa-solid fa-check"></i></button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Mobile Bottom Navigation Bar -->
+  <div class="mobile-nav hidden" id="mobile-nav">
+    <a href="#" class="mobile-nav-item active" data-view="feed">
+      <i class="fa-solid fa-house"></i>
+    </a>
+    <a href="#" class="mobile-nav-item" data-view="explore">
+      <i class="fa-solid fa-compass"></i>
+    </a>
+    <a href="#" class="mobile-nav-item" id="mobile-compose-btn">
+      <i class="fa-solid fa-circle-plus"></i>
+    </a>
+    <a href="#" class="mobile-nav-item" id="mobile-profile-btn" data-view="profile">
+      <i class="fa-solid fa-user"></i>
+    </a>
+    <a href="#" class="mobile-nav-item" id="mobile-logout-btn">
+      <i class="fa-solid fa-right-from-bracket"></i>
+    </a>
+  </div>
+
+  <!-- Application Scripts -->
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>
